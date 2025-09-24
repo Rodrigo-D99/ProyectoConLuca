@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dsmdg5pwk8svc"
-path="res://.godot/imported/CAMINAR.png-3d7e9c7a1ab99641d2bc82e7dbfde7ae.ctex"
+path="res://.godot/imported/Caminar.png-85fcc1fa30e000faa3c3cd6e63770be6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://imagen/CAMINAR.png"
-dest_files=["res://.godot/imported/CAMINAR.png-3d7e9c7a1ab99641d2bc82e7dbfde7ae.ctex"]
+source_file="res://Imagenes/Caminar.png"
+dest_files=["res://.godot/imported/Caminar.png-85fcc1fa30e000faa3c3cd6e63770be6.ctex"]
 
 [params]
 

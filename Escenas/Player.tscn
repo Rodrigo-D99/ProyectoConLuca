@@ -1,53 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cqeu2r8jafafw"]
+[gd_scene load_steps=13 format=3 uid="uid://dst6tr8c0yyba"]
 
-[ext_resource type="Texture2D" uid="uid://dsmdg5pwk8svc" path="res://imagen/CAMINAR.png" id="1_txj8c"]
-[ext_resource type="Texture2D" uid="uid://cigrhdvowc0mj" path="res://imagen/salto.png" id="2_j0kon"]
-
-[sub_resource type="GDScript" id="GDScript_j0kon"]
-script/source = "extends CharacterBody2D
-
-
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
-
-
-@onready var animationPlayer=$AnimationPlayer
-@onready var sprite2D=$Sprite2D
-
-func _physics_process(delta):
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-
-	# Handle jump.
-	if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis(\"ui_left\", \"ui_right\")
-	if direction:
-		velocity.x = direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-
-	move_and_slide()
-	
-	animation(direction)
-	
-	if direction ==1:
-		sprite2D.flip_h =false
-	elif direction == -1:
-		sprite2D.flip_h =true
-		
-		
-func animation(direction):
-	if is_on_floor():
-		if direction==0:
-			animationPlayer.play(\"salto\")
-		else:
-			animationPlayer.play(\"caminar\")
-"
+[ext_resource type="Script" uid="uid://kqjso73xb8d7" path="res://Scripts/Player.gd" id="1_5hhfp"]
+[ext_resource type="Texture2D" uid="uid://dsmdg5pwk8svc" path="res://Imagenes/Caminar.png" id="2_kwdw2"]
+[ext_resource type="Texture2D" uid="uid://cigrhdvowc0mj" path="res://Imagenes/Salto.png" id="3_j2dk4"]
+[ext_resource type="Script" uid="uid://4tsrs2mnfav" path="res://Scripts/Dash.gd" id="4_urfe6"]
+[ext_resource type="Script" uid="uid://b4h2uvds0fgmu" path="res://Scripts/Movimiento.gd" id="5_mok4h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_67bck"]
 size = Vector2(42, 141.75)
@@ -66,7 +23,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("1_txj8c")]
+"values": [ExtResource("2_kwdw2")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -118,7 +75,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_j0kon")]
+"values": [ExtResource("3_j2dk4")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -157,8 +114,12 @@ tracks/3/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6]
 }
 
+[sub_resource type="Animation" id="Animation_5hhfp"]
+resource_name = "Dash"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hdjqb"]
 _data = {
+&"Dash": SubResource("Animation_5hhfp"),
 &"caminar": SubResource("Animation_1ac00"),
 &"salto": SubResource("Animation_ojbb1")
 }
@@ -177,15 +138,14 @@ ignore_rotation = false
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 position = Vector2(8, -10)
-script = SubResource("GDScript_j0kon")
+script = ExtResource("1_5hhfp")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 position = Vector2(-1.9999924, -65.00001)
 scale = Vector2(0.12407409, 0.11302083)
-texture = ExtResource("1_txj8c")
+texture = ExtResource("3_j2dk4")
 hframes = 4
-vframes = 4
-frame = 14
+vframes = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 position = Vector2(2, -65)
@@ -196,6 +156,12 @@ libraries = {
 &"": SubResource("AnimationLibrary_hdjqb")
 }
 speed_scale = 0.862
+
+[node name="Dash" type="Node" parent="CharacterBody2D"]
+script = ExtResource("4_urfe6")
+
+[node name="Movimiento" type="Node" parent="CharacterBody2D"]
+script = ExtResource("5_mok4h")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(-7, 8)
